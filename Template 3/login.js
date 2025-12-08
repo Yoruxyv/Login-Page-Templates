@@ -51,5 +51,5 @@ class LoginForm {
     }
 }
 
-// Initialize the class
-new LoginForm('loginform', 'login-btn');
+// eslint-disable-next-line no-unused-vars
+const _loginForm = new LoginForm('loginform', 'login-btn');

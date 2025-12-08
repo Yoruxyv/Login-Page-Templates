@@ -101,5 +101,5 @@ class RegisterForm {
     }
 }
 
-// Initialize the class
-new RegisterForm('loginForm', 'submitBtn');
+// eslint-disable-next-line no-unused-vars
+const _register = new RegisterForm('loginForm', 'submitBtn');
