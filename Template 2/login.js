@@ -1,57 +1,65 @@
-const form = document.getElementById('loginForm');
-const submitBtn = document.getElementById('submitBtn');
+class LoginForm {
+    constructor(formId, submitBtnId) {
+        this.form = document.getElementById(formId);
+        this.submitBtn = document.getElementById(submitBtnId);
 
-form.addEventListener('submit', login);
+        this.emailElement = document.getElementById('email');
+        this.passwordElement = document.getElementById('password');
 
-function login(event) {
-    event.preventDefault();
+        this.emailErrorElement = document.getElementById('invalid-user');
+        this.passErrorElement = document.getElementById('invalid-pass');
 
-    const emailElement = document.getElementById('email');
-    const passwordElement = document.getElementById('password');
-
-    const email = emailElement.value.trim();
-    const password = passwordElement.value.trim();
-
-    const emailError = document.getElementById('invalid-user');
-    const passError = document.getElementById('invalid-pass');
-
-    emailError.textContent = '';
-    passError.textContent = '';
-
-    
-    if (!validateEmail(email)) {
-        emailError.textContent = 'Please enter a valid email address';
-        emailElement.focus();
-        setTimeout(() => emailError.textContent = '', 3000);
-        return;
+        this.form.addEventListener('submit', (event) => this.login(event));
     }
 
-    if (email === '') {
-        emailError.textContent = 'Email cannot be empty';
-        emailElement.focus();
-        setTimeout(() => emailError.textContent = '', 3000);
-        return;
+    showError(inputElement, errorElement, message, duration = 3000) {
+        errorElement.textContent = message;
+        inputElement.focus();
+        setTimeout(() => (errorElement.textContent = ''), duration);
     }
 
-    if (password === '') {
-        passError.textContent = 'Password cannot be empty';
-        passwordElement.focus();
-        setTimeout(() => passError.textContent = '', 3000);
-        return;
+    toggleButton(enabled, text) {
+        this.submitBtn.disabled = !enabled;
+        this.submitBtn.textContent = text;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Logging in...';
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
 
-    setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Login';
-        alert('Login simulated - valid inputs. Implement server auth for real logins.');
-        form.reset();
-    }, 800);
+    login(event) {
+        event.preventDefault();
+
+        const emailValue = this.emailElement.value.trim();
+        const passwordValue = this.passwordElement.value.trim();
+
+        // Clear previous errors
+        this.emailErrorElement.textContent = '';
+        this.passErrorElement.textContent = '';
+
+        // Validate email
+        if (emailValue === '') {
+            return this.showError(this.emailElement, this.emailErrorElement, 'Email cannot be empty');
+        }
+        if (!this.validateEmail(emailValue)) {
+            return this.showError(this.emailElement, this.emailErrorElement, 'Please enter a valid email address');
+        }
+
+        // Validate password
+        if (passwordValue === '') {
+            return this.showError(this.passwordElement, this.passErrorElement, 'Password cannot be empty');
+        }
+
+        // Simulate login
+        this.toggleButton(false, 'Logging in...');
+        setTimeout(() => {
+            alert('Login simulated - valid inputs. Implement server auth for real logins.');
+            this.form.reset();
+            this.toggleButton(true, 'Login');
+        }, 800);
+    }
 }
 
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
+// Initialize the class
+new LoginForm('loginForm', 'submitBtn');

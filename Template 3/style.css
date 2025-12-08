@@ -62,6 +62,7 @@ body {
     justify-content: space-between;
 }
 
+
 .left-group {
     display: flex;
     align-items: center;
@@ -134,6 +135,7 @@ body {
     position: relative;
     width: 100%;
 }
+
 
 .input-wrapper input {
     width: 100%;
@@ -232,6 +234,12 @@ input:-moz-autofill:active {
     bottom: -1rem; 
 }
 
+.switch-row{ margin-top: 0.75rem;}
+
+#invalid-pass {
+    bottom: -1.8rem; 
+
+}
 /* Responsive Media Queries */
 
 @media screen and (max-width: 1024px) {
@@ -332,6 +340,14 @@ input:-moz-autofill:active {
 
     .login-btn {
         font-size: 0.95rem;
+    }
+    .error {
+        font-size: 0.6rem;
+    }
+    .switch-row{ margin-top: 0.75rem;}
+
+    #invalid-pass {
+        bottom: -1.5rem; 
     }
 }
 

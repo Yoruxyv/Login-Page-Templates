@@ -1,99 +1,96 @@
-const form = document.getElementById('loginform');
-const submitBtn = document.getElementById('regis-btn');
+class RegisterForm {
+    constructor(formId, submitBtnId) {
+        this.form = document.getElementById(formId);
+        this.submitBtn = document.getElementById(submitBtnId);
 
-form.addEventListener('submit', register);
+        this.usernameElement = document.getElementById('username');
+        this.passwordElement = document.getElementById('password');
+        this.emailElement = document.getElementById('email');
 
-function register(event) {
-    event.preventDefault();
+        this.userErrorElement = document.getElementById('invalid-user');
+        this.passErrorElement = document.getElementById('invalid-pass');
+        this.emailErrorElement = document.getElementById('invalid-email');
+        this.sameUserPwElement = document.getElementById('same-user-pw');
 
-    const nameElement = document.getElementById('username');
-    const passwordElement = document.getElementById('password');
-    const emailElement = document.getElementById('email');
-
-    const fullname = nameElement.value.trim();
-    const password = passwordElement.value.trim();
-    const email = emailElement.value.trim()
-
-    const userError = document.getElementById('invalid-user');
-    const passError = document.getElementById('invalid-pass');
-    const emailError = document.getElementById('invalid-email');    
-    const sameUserPw = document.getElementById('same-user-pw');
-
-    userError.textContent = '';
-    passError.textContent = '';
-    emailError.textContent = '';
-    sameUserPw.textContent = '';
-
-
-    if (!validateEmail(email)) {
-        emailError.textContent = 'Please enter a valid email address';
-        emailElement.focus();
-        setTimeout(() => emailError.textContent = '', 3000);
-        return;
+        this.form.addEventListener('submit', (event) => this.register(event));
     }
 
-    if (fullname === '') {
-        userError.textContent = 'Username cannot be empty';
-        nameElement.focus();
-        setTimeout(() => userError.textContent = '', 3000);
-        return;
-    }
-    if (fullname.length < 3) {
-        userError.textContent = 'Username must be at least 3 characters';
-        nameElement.focus();
-        setTimeout(() => userError.textContent = '', 3000);
-        return;
+    showError(inputElement, errorElement, message, duration = 3000) {
+        errorElement.textContent = message;
+        inputElement.focus();
+        setTimeout(() => (errorElement.textContent = ''), duration);
     }
 
-
-    if (password === '') {
-        passError.textContent = 'Password cannot be empty';
-        passwordElement.focus();
-        setTimeout(() => passError.textContent = '', 3000);
-        return;
+    toggleButton(enabled, text) {
+        this.submitBtn.disabled = !enabled; // disables if enabled is false
+        this.submitBtn.textContent = text;
     }
 
-    if (password.length < 8) {
-        passError.textContent = 'Password must be at least 8 characters';
-        passwordElement.focus();
-        setTimeout(() => passError.textContent = '', 3000);
-        return;
+    validatePassword(password) {
+        const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+        return re.test(password);
     }
 
-    if (!validatePassword(password)) {
-        passError.textContent =
-            'Password must include uppercase, lowercase, a number, and a special character';
-        passwordElement.focus();
-        setTimeout(() => passError.textContent = '', 3000);
-        return;
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     }
 
-    if (fullname === password) {
-        sameUserPw.textContent = 'Username and password should not be the same';
-        passwordElement.focus();
-        setTimeout(() => sameUserPw.textContent = '', 3000);
-        return;
+    register(event) {
+        event.preventDefault();
+
+        const usernameValue = this.usernameElement.value.trim();
+        const passwordValue = this.passwordElement.value.trim();
+        const emailValue = this.emailElement.value.trim();
+
+        // Clear previous errors
+        this.userErrorElement.textContent = '';
+        this.passErrorElement.textContent = '';
+        this.emailErrorElement.textContent = '';
+        this.sameUserPwElement.textContent = '';
+
+        // Validate email
+        if (!this.validateEmail(emailValue)) {
+            return this.showError(this.emailElement, this.emailErrorElement, 'Please enter a valid email address');
+        }
+
+        // Validate username
+        if (usernameValue === '') {
+            return this.showError(this.usernameElement, this.userErrorElement, 'Username cannot be empty');
+        }
+        if (usernameValue.length < 3) {
+            return this.showError(this.usernameElement, this.userErrorElement, 'Username must be at least 3 characters');
+        }
+
+        // Validate password
+        if (passwordValue === '') {
+            return this.showError(this.passwordElement, this.passErrorElement, 'Password cannot be empty');
+        }
+        if (passwordValue.length < 8) {
+            return this.showError(this.passwordElement, this.passErrorElement, 'Password must be at least 8 characters');
+        }
+        if (!this.validatePassword(passwordValue)) {
+            return this.showError(
+                this.passwordElement,
+                this.passErrorElement,
+                'Password must include uppercase, lowercase, a number, and a special character'
+            );
+        }
+
+        // Check username !== password
+        if (usernameValue === passwordValue) {
+            return this.showError(this.passwordElement, this.sameUserPwElement, 'Username and password should not be the same');
+        }
+
+        // Simulate registration
+        this.toggleButton(false, 'Logging in...');
+        setTimeout(() => {
+            alert('Register simulated - valid inputs. Implement server auth for real logins.');
+            this.form.reset();
+            this.toggleButton(true, 'Register');
+        }, 800);
     }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Logging in...';
-
-    // NOTE: Do not actually send credentials in client-only demo.
-    // In a real app you would POST to the server over HTTPS here.
-    setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Register';
-        alert('Register simulated - valid inputs. Implement server auth for real logins.');
-        form.reset();   
-    }, 800);
 }
 
-function validatePassword(password) {
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
-    return re.test(password);
-}
-
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
+// Initialize the class
+new RegisterForm('loginform', 'regis-btn');
