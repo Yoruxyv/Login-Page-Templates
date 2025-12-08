@@ -1,46 +1,46 @@
-const form = document.getElementById('loginForm');
-const submitBtn = document.getElementById('submitBtn');
+class LoginForm {
+    constructor(formId, submitBtnId) {
+        this.form = document.getElementById(formId);
+        this.submitBtn = document.getElementById(submitBtnId);
+        this.username = document.getElementById('username');
+        this.password = document.getElementById('password');
+        this.userError = document.getElementById('invalid-user');
+        this.passError = document.getElementById('invalid-pass');
 
-form.addEventListener('submit', login);
-
-function login(event) {
-    event.preventDefault();
-
-    const usernameElement = document.getElementById('username');
-    const passwordElement = document.getElementById('password');
-
-    const username = usernameElement.value.trim();
-    const password = passwordElement.value.trim();
-
-    const userError = document.getElementById('invalid-user');
-    const passError = document.getElementById('invalid-pass');
-
-    userError.textContent = '';
-    passError.textContent = '';
-
-    if (username === '') {
-        userError.textContent = 'Username cannot be empty';
-        usernameElement.focus();
-        setTimeout(() => userError.textContent = '', 3000);
-        return;
+        this.form.addEventListener('submit', (event) => this.login(event));
     }
 
-    if (password === '') {
-        passError.textContent = 'Password cannot be empty';
-        passwordElement.focus();
-        setTimeout(() => passError.textContent = '', 3000);
-        return;
+    showError(element, message, duration = 3000) {
+        element.textContent = message;
+        element.previousElementSibling.focus();
+        setTimeout(() => element.textContent = '', duration);
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Logging in...';
+    toggleButton(enabled, text) {
+        this.submitBtn.disabled = !enabled;
+        this.submitBtn.textContent = text;
+    }
 
-    setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Login';
-        alert('Login simulated - valid inputs. Implement server auth for real logins.');
-        form.reset();
-    }, 800);
+    login(event) {
+        event.preventDefault();
+
+        const usernameValue = this.username.value.trim();
+        const passwordValue = this.password.value.trim();
+
+        this.userError.textContent = '';
+        this.passError.textContent = '';
+
+        if (usernameValue === '') return this.showError(this.userError, 'Username cannot be empty');
+        if (passwordValue === '') return this.showError(this.passError, 'Password cannot be empty');
+
+        this.toggleButton(false, 'Logging in...');
+
+        setTimeout(() => {
+            alert('Login simulated - valid inputs. Implement server auth for real logins.');
+            this.form.reset();
+            this.toggleButton(true, 'Login');
+        }, 800);
+    }
 }
 
-
+new LoginForm('loginForm', 'submitBtn');
