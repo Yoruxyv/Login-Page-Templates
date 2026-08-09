@@ -7,9 +7,9 @@
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Dendroculus/Login-Page-Templates?style=flat-square" alt="License"></a>
-  <a href="https://github.com/Dendroculus/Login-Page-Templates"><img src="https://img.shields.io/github/repo-size/Dendroculus/Login-Page-Templates?style=flat-square" alt="Repo Size"></a>
-  <a href="https://github.com/Dendroculus/Login-Page-Templates/issues"><img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=flat-square" alt="Contributions Welcome"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Yoruxyv/Login-Page-Templates?style=flat-square" alt="License"></a>
+  <a href="https://github.com/Yoruxyv/Login-Page-Templates"><img src="https://img.shields.io/github/repo-size/Yoruxyv/Login-Page-Templates?style=flat-square" alt="Repo Size"></a>
+  <a href="https://github.com/Yoruxyv/Login-Page-Templates/issues"><img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=flat-square" alt="Contributions Welcome"></a>
 </p>
 
 A small collection of polished, responsive login page templates built only with HTML and CSS with light JavaScript. Copy, adapt, and drop these into your project for fast, accessible authentication screens.
@@ -50,7 +50,7 @@ A small collection of polished, responsive login page templates built only with 
 ## 🚀 Quick start 
 1. Clone the repo:
 ```bash
-git clone https://github.com/Dendroculus/Login-Page-Templates.git
+git clone https://github.com/Yoruxyv/Login-Page-Templates.git
 ```
 2. Open a template in your browser:
 - Example: `templates/basic-login/index.html`
@@ -95,5 +95,5 @@ This project is MIT licensed — see `LICENSE`. Templates may reference third-pa
 Thanks to the open-source designers and the community for patterns and utilities that inspired these templates.
 
 ## ✉️ Contact & support 
-Repo owner is maintained by [@Dendroculus](https://github.com/Dendroculus)
+Repo owner is maintained by [@Yoruxyv](https://github.com/Yoruxyv)
 
